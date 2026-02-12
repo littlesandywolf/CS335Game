@@ -12,7 +12,7 @@ public class Main {
 
         //creating random genes (= 50 points total) here?
 
-        System.out.println("Created: " + name);
+        System.out.println("Created: " + name); 
         //"get stat" print statement here
 	}
 }
