@@ -37,4 +37,15 @@ public class Critters {
             default -> null;
         };
     }
+	
+	public void addExp(String statName, int amount) {
+        Stats stat = getStat(statName);
+        if (stat != null) {
+            stat.addExp(amount);
+        }
+    }
+
+    public int getId() { return id; }
+    public String getName() { return name; }
+    public boolean isPlayerOwned() { return playerOwned; }
 }
