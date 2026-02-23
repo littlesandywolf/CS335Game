@@ -6,18 +6,20 @@ public class Stats {
 	private int exp = 0;
 	private float value = 0;
 	private float multiplier;
+	private int levelCap;
 	
 	
 	//constructor
-	public Stats(String type, int geneA, int geneB) {
+	public Stats(String type, int geneA, int geneB, int levelCap) {
 		this.type = type;
 		this.multiplier = (10.0f + geneA + geneB)/10.0f;
+		this.levelCap = levelCap;
 	}
 	
 	
 	//math for exp counts
 	public void addExp(int amount) {
-		if (level >= 99) {
+		if (level >= levelCap) {
 			exp = 0;
 			return;
 		} 
@@ -26,7 +28,7 @@ public class Stats {
             exp -= 100;
             levelUp();
         }
-        if (level == 99) exp = 0;
+        if (level >= levelCap) exp = 0;
 	}
 	
 	//leveling up method

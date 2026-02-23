@@ -14,11 +14,11 @@ public class Critters {
 		this.playerOwned = playerOwned;
 		
 		//genes paired up: runA, runB, swimA, swimB, etc.
-		this.run = new Stats("Run", genes[0], genes[1]);
-        this.swim = new Stats("Swim", genes[2], genes[3]);
-        this.climb = new Stats("Climb", genes[4], genes[5]);
-        this.fly = new Stats("Fly", genes[6], genes[7]);
-        this.stamina = new Stats("Stamina", genes[8], genes[9]);
+		this.run = new Stats("Run", genes[0], genes[1], 99);
+        this.swim = new Stats("Swim", genes[2], genes[3], 99);
+        this.climb = new Stats("Climb", genes[4], genes[5], 99);
+        this.fly = new Stats("Fly", genes[6], genes[7], 99);
+        this.stamina = new Stats("Stamina", genes[8], genes[9], 99);
 	}
 	
 	//method to check if the id from two different critters are equal
