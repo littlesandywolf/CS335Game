@@ -18,7 +18,7 @@ public class Stats {
 	
 	
 	//math for exp counts
-	public void addExp(int amount) {
+	public void addExp(int amount) { 
 		if (level >= levelCap) {
 			exp = 0;
 			return;
