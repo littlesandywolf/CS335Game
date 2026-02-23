@@ -33,9 +33,14 @@ public class Stats {
 	
 	//leveling up method
 	private void levelUp() {
+		if (level >= levelCap) {
+			exp = 0;
+			return;
+		}
 		level ++;
         float gain = (float) (Math.random() * 6 + 5) * multiplier; //formula is random(5-10) * multiplier
         value += gain;
+		
 	}
 	
 	//nice printing

@@ -41,7 +41,7 @@ public class Critters {
 	public void addExp(String statName, int amount) {
         Stats stat = getStat(statName);
         if (stat != null) {
-            stat.addExp(amount);
+            stat.addExp(amount); //levels up the stat if necessary
         }
     }
 
