@@ -29,9 +29,24 @@ public class Main {
             System.out.println("4. Age up ");
             System.out.println("5. Quit");
             System.out.print("Choice: ");
-
-            int choice = s.nextInt();
-            s.nextLine(); // consume newline
+            
+            String choiceline = s.nextLine().trim();
+            int choice;
+            
+            try {
+            	choice = Integer.parseInt(choiceline);	
+            }
+            
+            catch (NumberFormatException e) {
+            	System.out.println("Invalid Choice!");
+                
+                continue;
+            }
+        
+        	if (choice < 1 || choice > 5) {
+        		System.out.println("Invalid Choice!");
+        		continue;
+        	}
 
             switch (choice) {
                 case 1:
