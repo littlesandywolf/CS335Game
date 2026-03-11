@@ -8,7 +8,7 @@ public class Main {
 		
 		System.out.println("Welcome to The Critter Game");
         System.out.print("Name your new critter: ");
-        String name = s.nextLine();
+        String name = s.nextLine().trim();
 
 		if (name.isEmpty()) name = "Baby Critter";
         if (name.length() > 64) name = name.substring(0, 64);
@@ -66,7 +66,16 @@ public class Main {
                 case 3:
                     System.out.print("New name: ");
                     String newName = s.nextLine().trim();
-                    if (critter.rename(newName)) {
+                    
+                    if (newName.isEmpty()) {
+                    	System.out.println("Name can't be empty!");
+                    }
+                    
+                    else if (newName.length() > 64) {
+                    	System.out.println("Name needs to be LESS than or EQUAL to 64 characters!");
+                    }
+                    
+                    else if (critter.rename(newName)) {
                         System.out.println("Renamed to " + critter.getName() + "!");
                     } else {
                         System.out.println("That name is already taken!");
