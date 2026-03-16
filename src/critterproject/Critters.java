@@ -44,7 +44,22 @@ public class Critters {
             stat.addExp(amount); //levels up the stat if necessary
         }
     }
-
+	
+	//updateTurn method
+	
+	//feed method
+	
+	//rest method
+	
+	//play method
+	
+	//adjustAlignment method
+	
+	//lifeStage method
+	
+	//updateLifeStage method
+	
+	
     public int getId() { return id; }
     public String getName() { return name; }
     public boolean isPlayerOwned() { return playerOwned; }
