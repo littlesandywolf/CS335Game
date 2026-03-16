@@ -47,5 +47,8 @@ public class Stats {
 	public String toString() {
 	    return type + ": Lvl " + level + " (" + value + ") [Exp: " + exp + "/100, Mult: " + multiplier + "]";
 	}
-	
+
+	public float getValue() { return value; }
+	public int getLevel() { return level; }
+	public int getExp() { return exp; }
 }
