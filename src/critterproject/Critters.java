@@ -26,6 +26,29 @@ public class Critters {
         return this.id == other.id;
 	}
 	
+	public int getTotalPower() {
+	    return run.getLevel() +
+	           swim.getLevel() +
+	           climb.getLevel() +
+	           fly.getLevel() +
+	           stamina.getLevel();
+	}
+	
+	public int[] getGenes() {
+	    return new int[] {
+	        run.getGeneA(),    // genes[0]
+	        run.getGeneB(),    // genes[1]
+	        swim.getGeneA(),   // genes[2]
+	        swim.getGeneB(),   // genes[3]
+	        climb.getGeneA(),  // genes[4]
+	        climb.getGeneB(),  // genes[5]
+	        fly.getGeneA(),    // genes[6]
+	        fly.getGeneB(),    // genes[7]
+	        stamina.getGeneA(),// genes[8]
+	        stamina.getGeneB() // genes[9]
+	    };
+	}
+	
 	//getter for stats -> instead of if/else used switch statement so we can add later (https://www.w3schools.com/java/java_switch.asp) 
 	public Stats getStat(String statName) {
         return switch (statName.toLowerCase()) {
