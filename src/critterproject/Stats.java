@@ -9,13 +9,26 @@ public class Stats {
 	private int levelCap;
 	
 	
-	//constructor
-	public Stats(String type, int geneA, int geneB, int levelCap) {
-		this.type = type;
-		this.multiplier = (10.0f + geneA + geneB)/10.0f;
-		this.levelCap = levelCap;
-	}
-	
+	private final int geneA;   
+    private final int geneB;
+
+   
+    public Stats(String type, int geneA, int geneB, int levelCap) {
+        this.type     = type;
+        this.geneA    = geneA;          
+        this.geneB    = geneB;
+        this.multiplier = (10.0f + geneA + geneB) / 10.0f;
+        this.levelCap = levelCap;
+    }
+
+    
+    public int getGeneA() {
+        return geneA;
+    }
+
+    public int getGeneB() {
+        return geneB;
+    }
 	
 	//math for exp counts
 	public void addExp(int amount) { 
