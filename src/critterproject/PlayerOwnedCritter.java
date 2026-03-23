@@ -2,7 +2,7 @@ package critterproject;
 
 import java.util.HashSet;
 import java.util.Set;
-
+ 
 enum LifeStage {
     BABY, JUVENILE, ADULT, ELDER
 }
@@ -16,15 +16,23 @@ public class PlayerOwnedCritter extends Critters {
     private static final Set<String> usedNames = new HashSet<>();
 
     public PlayerOwnedCritter(String name, int[] genes) {
-        String finalName = name;
-        int suffix = 1;
-        while (usedNames.contains(finalName)) {
-            finalName = name + " #" + suffix++;
-        }
-        super(finalName, true, genes);
-        usedNames.add(finalName);
+
+        super(uniqueName(name), true, genes);
+        usedNames.add(this.name);
         this.lifeStage = LifeStage.BABY;
     }
+    
+    private static String uniqueName(String name) {
+    
+	    String finalName = name;
+	    int suffix = 1;
+	    while (usedNames.contains(finalName)) {
+	        finalName = name + " #" + suffix++;
+	    }
+	    
+	    return finalName;
+    }
+	 
 
     // Age & Bond
     public void incrementAge() {
