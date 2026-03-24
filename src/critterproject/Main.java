@@ -13,7 +13,7 @@ public class Main {
 		if (name.isEmpty()) name = "Baby Critter";
         if (name.length() > 64) name = name.substring(0, 64);
 
-		//creating random genes (= 50 points total) here?
+		//creating random genes (= 50 points total) here
         int[] genes = CritterFactory.generateGenes();
         PlayerOwnedCritter critter = new PlayerOwnedCritter(name, genes);
 
