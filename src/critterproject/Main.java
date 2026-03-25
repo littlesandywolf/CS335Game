@@ -23,7 +23,7 @@ public class Main {
         boolean running = true;
         while (running) {
             System.out.println("\nWhat would you like to do?");
-            System.out.println("1. View statsss");
+            System.out.println("1. View stats");
             System.out.println("2. Add EXP to a stat");
             System.out.println("3. Rename critter");
             System.out.println("4. Age up ");
