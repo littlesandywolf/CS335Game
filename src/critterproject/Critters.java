@@ -6,6 +6,8 @@ public class Critters {
 	protected String name; //critter name
 	protected boolean playerOwned; //boolean whether or not owned by player
 	
+	protected int hunger = 0; //hunger variable: 0=full, 100=starving
+	
 	protected Stats run, swim, climb, fly, stamina;
 	
 	public Critters(String name, boolean playerOwned, int[] genes) {
@@ -21,6 +23,52 @@ public class Critters {
         this.stamina = new Stats("Stamina", genes[8], genes[9], 99); 
 	}
 	
+	//feed method: reduces hunger
+    public void feed(int foodAmount) {
+        this.hunger -= foodAmount;
+        if (this.hunger < 0) this.hunger = 0; // Can't be "negative" hungry
+        System.out.println(name + " ate some food. Hunger is now " + hunger + "/100.");
+    }
+    
+    // rest method recovers stamina
+    public void rest() {
+        System.out.println(name + " is taking a nap...");
+        //recovering 20 points of "experience" or "level" for stamina
+        this.addExp("stamina", 20); 
+        //resting will slightly increase hunger
+        this.hunger += 5; 
+    }
+    
+    
+    
+    //play method increases exp but costs stamina and increases hunger
+    public void play(String statToTrain) {
+        if (this.hunger > 80) {
+            System.out.println(name + " is too hungry to play!");
+            return;
+        }
+        
+        System.out.println(name + " is playing and learning " + statToTrain + "!");
+        this.addExp(statToTrain, 15);
+        
+        //playing makes critters hungrier and tired
+        this.hunger += 10;
+        
+        //future way to "drain" stamina called here eventually? 
+    }
+	
+    
+    //updateTurn is called at the end of every turn
+    public void updateTurn() {
+        this.hunger += 2; //critter will get hungrier as time goes on
+        if (this.hunger > 100) this.hunger = 100;
+        
+        if (this.hunger > 90) {
+            System.out.println("Warning: " + name + " is starving!");
+        }
+    }
+	
+    
 	//method to check if the id from two different critters are equal
 	public boolean isSameCritter(Critters other) {
         return this.id == other.id;
@@ -67,23 +115,10 @@ public class Critters {
             stat.addExp(amount); //levels up the stat if necessary
         }
     }
-	
-	//updateTurn method 
-	
-	//feed method
-	
-	//rest method
-	
-	//play method
-	
-	//adjustAlignment method
-	
-	//lifeStage method
-	
-	//updateLifeStage method
-	
+
 	
     public int getId() { return id; }
     public String getName() { return name; }
     public boolean isPlayerOwned() { return playerOwned; }
+    public int getHunger() { return hunger; }
 }
