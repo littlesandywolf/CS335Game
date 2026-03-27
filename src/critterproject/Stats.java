@@ -31,17 +31,25 @@ public class Stats {
     }
 	
 	//math for exp counts
-	public void addExp(int amount) { 
-		if (level >= levelCap) {
-			exp = 0;
-			return;
-		} 
-		exp += amount;
-		while (exp >= 100 && level < 99) {
-            exp -= 100;
-            levelUp();
-        }
-        if (level >= levelCap) exp = 0;
+	public void addExp(int amount) {
+	    if (amount < 0) {
+	        System.out.println("EXP cannot be negative!");
+	        return;
+	    }
+	
+	    if (level >= levelCap) {
+	        exp = 0;
+	        return;
+	    }
+	
+	    exp += amount;
+	
+	    while (exp >= 100 && level < levelCap) {
+	        exp -= 100;
+	        levelUp();
+	    }
+	
+	    if (level >= levelCap) exp = 0;
 	}
 	
 	//leveling up method
