@@ -111,9 +111,13 @@ public class Critters {
 	
 	public void addExp(String statName, int amount) {
         Stats stat = getStat(statName);
-        if (stat != null) {
-            stat.addExp(amount); //levels up the stat if necessary
-        }
+
+	    if (stat == null) {
+	        System.out.println("Invalid stat name: " + statName);
+	        return;
+	    }
+	
+	    stat.addExp(amount);
     }
 
 	
