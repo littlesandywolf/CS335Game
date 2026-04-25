@@ -14,15 +14,21 @@ public class GamePanel extends JPanel implements Runnable{
 	final int scale = 3; //scaling 16x16 cause that is too small
 	
 	public final int tileSize = originalTileSize * scale; //48x48 tile
-	
-	//how many tiles should the game screen be?
 	public final int maxScreenCol= 16;
 	public final int maxScreenRow= 12;
 	public final int screenWidth = tileSize * maxScreenCol; //768 pixels
 	public final int screenHeight = tileSize * maxScreenRow; //576 pixels
 	
+	
+	int FPS = 60; 
+
 	KeyHandler keyH = new KeyHandler();
 	Thread gameThread;
+	
+	//default position
+	int playerX = 100;
+	int playerY = 100;
+	int playerSpeed = 4;
 	
 	public GamePanel() {
 		
@@ -32,18 +38,23 @@ public class GamePanel extends JPanel implements Runnable{
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
 	}
+
+	
+	
 	
 	public void startGameThread() {
 		
 		gameThread = new Thread(this);
 		gameThread.start(); 
 	}
-	
-	
-	
+
+
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		double drawInterval = 1000000000/FPS;
+		double nextDrawTime = System.nanoTime() + drawInterval; //allocated time for a single loop is 0.01666 seconds (bc math)
+		
 		while(gameThread != null) {
 			
 			//UPDATE: update information such as character positions
@@ -51,11 +62,43 @@ public class GamePanel extends JPanel implements Runnable{
 			
 			//DRAW: draw the screen with the updated info
 			repaint();
+			
+		
+			try {
+				double remainingTime = nextDrawTime - System.nanoTime();
+				remainingTime = remainingTime/1000000; //convert to millisecond bc sleep method
+				
+				if(remainingTime < 0) {
+					remainingTime = 0;
+				}
+				
+				Thread.sleep((long) remainingTime);
+				
+				nextDrawTime += drawInterval;
+				
+				
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
 	}
+		
 		
 	public void update() {
 		
+		if(keyH.upPressed == true) {
+			playerY -= playerSpeed;
+		} else if(keyH.downPressed == true) {
+			playerY += playerSpeed;
+		} else if(keyH.leftPressed == true) {
+			playerX -= playerSpeed;
+		} else if(keyH.rightPressed == true) {
+			playerX += playerSpeed;
+		}
 	}
+	
+	
 	
 	public void paintComponent(Graphics g) {
 		
@@ -63,9 +106,9 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		Graphics2D g2 = (Graphics2D)g; //extends the Graphics class to provide more sophisticated control over geometry, coordinate transformations, color management, and text layout
 		
-		tileM.draw(g2); //we draw tiles THEN player - don't want to hide character
+		g2.setColor(Color.white);; //we draw tiles THEN player - don't want to hide character
 		
-		player.draw(g2);
+		g2.fillRect(playerX, playerY, tileSize, tileSize);
 		
 		g2.dispose(); //dispose of this graphics context and release any system resources that it is using
 		

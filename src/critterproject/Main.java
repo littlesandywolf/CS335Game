@@ -1,6 +1,6 @@
 package critterproject;
 
-import java.util.Scanner;
+//import java.util.Scanner;
 
 import javax.swing.JFrame;
 
@@ -10,12 +10,17 @@ public class Main {
 		JFrame window = new JFrame();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //exit when user hits X
 		window.setResizable(false); //no resizing window
-		window.setTitle("My 2D Game Example");
+		window.setTitle("Critter Game");
+		
+		GamePanel gamePanel = new GamePanel();
+		window.add(gamePanel);
+		
+		window.pack();
 		
 		window.setLocationRelativeTo(null); //window will be displayed at the center of the screen bc not specified
 		window.setVisible(true);
 		
-		
+		gamePanel.startGameThread();
 		
 		
 		
