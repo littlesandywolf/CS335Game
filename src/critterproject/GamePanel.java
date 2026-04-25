@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import entity.Player;
+
 public class GamePanel extends JPanel implements Runnable{
 	
 	//SCREEN SETTINGS
@@ -24,6 +26,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 	KeyHandler keyH = new KeyHandler();
 	Thread gameThread;
+	Player player = new Player(this, keyH);
 	
 	//default position
 	int playerX = 100;
@@ -86,16 +89,8 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		
 	public void update() {
+		player.update();
 		
-		if(keyH.upPressed == true) {
-			playerY -= playerSpeed;
-		} else if(keyH.downPressed == true) {
-			playerY += playerSpeed;
-		} else if(keyH.leftPressed == true) {
-			playerX -= playerSpeed;
-		} else if(keyH.rightPressed == true) {
-			playerX += playerSpeed;
-		}
 	}
 	
 	
@@ -106,9 +101,7 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		Graphics2D g2 = (Graphics2D)g; //extends the Graphics class to provide more sophisticated control over geometry, coordinate transformations, color management, and text layout
 		
-		g2.setColor(Color.white);; //we draw tiles THEN player - don't want to hide character
-		
-		g2.fillRect(playerX, playerY, tileSize, tileSize);
+		player.draw(g2);
 		
 		g2.dispose(); //dispose of this graphics context and release any system resources that it is using
 		
