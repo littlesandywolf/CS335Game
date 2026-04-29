@@ -21,7 +21,7 @@ public class Player extends Entity {
 		this.keyH = keyH;
 		
 		setDefaultValues();
-		//getPlayerImage();
+		getPlayerImage();
 		
 	
 	}
@@ -31,7 +31,7 @@ public class Player extends Entity {
 		x = 100;
 		y = 100; //starting position
 		speed = 4;
-		//direction = "down";
+		direction = "down";
 		
 	}
 	
