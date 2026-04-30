@@ -15,6 +15,8 @@ public class Player extends Entity {
 	GamePanel gp;
 	KeyHandler keyH;
 	
+	public String name = "Critter";
+	
 	public final int screenX; //screen position is final; doesnt change
 	public final int screenY;
 	

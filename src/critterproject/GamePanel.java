@@ -32,15 +32,22 @@ public class GamePanel extends JPanel implements Runnable{
 	int FPS = 60; 
 	
 	TileManager tileM = new TileManager(this);
-	KeyHandler keyH = new KeyHandler();
+	KeyHandler keyH = new KeyHandler(this);
 	Thread gameThread;
 	public CollisionChecker cChecker = new CollisionChecker(this);
 	public Player player = new Player(this, keyH);
+	public UI ui = new UI(this);
 	
 	//default position
 	int playerX = 100;
 	int playerY = 100;
 	int playerSpeed = 4;
+	
+	public int gameState;
+	public final int titleState = 0;
+	public final int playState = 1;
+	
+	
 	
 	public GamePanel() {
 		
@@ -49,6 +56,7 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setDoubleBuffered(true); //can improve game's rendering performance
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
+		this.gameState = titleState; // <--- MAKE SURE THIS IS 0
 	}
 
 	
@@ -110,11 +118,18 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		Graphics2D g2 = (Graphics2D)g; //extends the Graphics class to provide more sophisticated control over geometry, coordinate transformations, color management, and text layout
 		
-		tileM.draw(g2);
-		
-		player.draw(g2);
-		
-		g2.dispose(); //dispose of this graphics context and release any system resources that it is using
+		// TITLE SCREEN
+	    if (gameState == titleState) {
+	        ui.draw(g2); 
+	    } 
+	    // PLAYING
+	    else {
+	        tileM.draw(g2); // Draw tiles first
+	        player.draw(g2); // Draw player second
+	        ui.draw(g2);    // Draw UI last (so it's on top!)
+	    }
+	    
+	    g2.dispose(); //dispose of this graphics context and release any system resources that it is using
 		
 		//in order to make white square move, we must add keyboard input	
 	}
