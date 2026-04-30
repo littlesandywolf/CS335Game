@@ -3,25 +3,44 @@ package critterproject;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+import java.io.InputStream;
+import java.awt.FontFormatException;
+import java.io.IOException;
+
 
 public class UI {
 
     GamePanel gp;
     Graphics2D g2;
+    Font pixelFont;
     Font arial_40, arial_80B;
     public String message = "";
     public boolean messageOn = false;
     public int messageCounter = 0;
     
+    
     //command integer (title screen menu selection for later?)
     public int commandNum = 0;
 
+    
+    
     public UI(GamePanel gp) {
         this.gp = gp;
-        arial_40 = new Font("Arial", Font.PLAIN, 40);
-        arial_80B = new Font("Arial", Font.BOLD, 80);
+        
+        try {
+            // Load the font file from your resource folder
+            InputStream is = getClass().getResourceAsStream("/font/PublicPixel.ttf");
+            pixelFont = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            //fallback to arial
+            pixelFont = new Font("Arial", Font.PLAIN, 14); 
+        }
     }
+    
+    
+    
+    
 
     public void showMessage(String text) {
         message = text;
@@ -50,7 +69,7 @@ public class UI {
         g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 
         //title name
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 70F));
+        g2.setFont(pixelFont.deriveFont(Font.BOLD, 36F));
         String text = "The Critter Game";
         int x = getXforCenteredText(text);
         int y = gp.tileSize * 3;
@@ -68,7 +87,7 @@ public class UI {
         g2.drawImage(gp.player.down1, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
 
         //menu
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 16F));
 
         text = "Press enter to start game...";
         x = getXforCenteredText(text);
@@ -80,7 +99,7 @@ public class UI {
 
     public void drawPlayerUI() {
         //display critter name in the top left
-    	g2.setFont(g2.getFont().deriveFont(Font.BOLD, 14F));
+    	g2.setFont(pixelFont.deriveFont(Font.PLAIN, 10F));
     	
     	String displayName = "Critter: " + gp.player.name;
         
