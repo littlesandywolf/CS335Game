@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -14,11 +15,19 @@ public class Player extends Entity {
 	GamePanel gp;
 	KeyHandler keyH;
 	
+	public final int screenX; //screen position is final; doesnt change
+	public final int screenY;
+	
 	
 	public Player(GamePanel gp, KeyHandler keyH) {
 		
 		this.gp = gp;
 		this.keyH = keyH;
+		
+		screenX = gp.screenWidth/2 - (gp.tileSize/2);
+		screenY = gp.screenHeight/2 - (gp.tileSize/2);
+		
+		solidArea = new Rectangle(8, 16, 32, 32); //collision area for player
 		
 		setDefaultValues();
 		getPlayerImage();
@@ -28,8 +37,8 @@ public class Player extends Entity {
 	
 	
 	public void setDefaultValues() {
-		x = 100;
-		y = 100; //starting position
+		worldX = gp.tileSize * 23;
+		worldY = gp.tileSize * 21; 
 		speed = 4;
 		direction = "down";
 		
@@ -55,19 +64,57 @@ public class Player extends Entity {
 	}
 	
 	public void update() {
-		if(keyH.upPressed == true) {
-			direction = "up";
-			y -= speed;
-		} else if(keyH.downPressed == true) {
-			direction = "down";
-			y += speed;
-		} else if(keyH.leftPressed == true) {
-			direction = "left";
-			x -= speed;
-		} else if(keyH.rightPressed == true) {
-			direction = "right";
-			x += speed;
-		}
+		
+		if(keyH.upPressed == true || keyH.downPressed == true || keyH.rightPressed == true || keyH.leftPressed == true) {
+			if(keyH.upPressed == true) {
+				direction = "up";
+				
+			} else if(keyH.downPressed == true) {
+				direction = "down";
+				
+			} else if(keyH.leftPressed == true) {
+				direction = "left";
+				
+			} else if(keyH.rightPressed == true) {
+				direction = "right";
+				
+			}
+			
+			//check tile collision
+			collisionOn = false;
+			gp.cChecker.checkTile(this);
+			
+			//if collision is false, player can move 
+			if(collisionOn == false) {
+				switch(direction) {
+				case "up":
+					worldY -= speed;
+					break;
+				case "down":
+					worldY += speed;
+					break;
+				case "left":
+					worldX -= speed;
+					break;
+				case "right":
+					worldX += speed;
+					break;
+					
+				}
+			}
+			
+			
+			spriteCounter++;
+			if(spriteCounter > 12) {
+				if(spriteNum == 1) {
+					spriteNum = 2;	
+				} else if(spriteNum == 2) {
+					spriteNum = 1;
+				} 
+				
+				spriteCounter = 0;
+			}
+		}	
 	}
 	
 	public void draw(Graphics2D g2) {
@@ -77,22 +124,26 @@ public class Player extends Entity {
 		
 		BufferedImage image = null;
 		
-		switch(direction) {
-		case "up":
-			image = up1;
-			break;
-		case "down":
-			image = down1;
-			break;
-		case "left":
-			image = left1;
-			break;
-		case "right":
-			image = right1;
-			break;
-		}
-		g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+		//System.out.println("DEBUG: direction is [" + direction + "] and spriteNum is " + spriteNum);
 		
+		switch(direction) {
+        case "up":
+            image = (spriteNum == 1) ? up1 : up2;
+            break;
+        case "down":
+            image = (spriteNum == 1) ? down1 : down2;
+            break;
+        case "left":
+            image = (spriteNum == 1) ? left1 : left2;
+            break;
+        case "right":
+            image = (spriteNum == 1) ? right1 : right2;
+            break;
+    }
+
+    
+		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+  
 	}
 }
 
