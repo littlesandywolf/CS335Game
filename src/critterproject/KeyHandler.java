@@ -23,6 +23,13 @@ public class KeyHandler implements KeyListener{
 		
 		int code = e.getKeyCode();
 		
+		if (gp.gameState == gp.gameOverState) {
+	        if (code == KeyEvent.VK_SPACE) {
+	            gp.gameState = gp.titleState;
+	            gp.resetGame(); // We need to clear the stats
+	        }
+	    }
+		
 		if (gp.gameState == gp.titleState) {
 	        if (code == KeyEvent.VK_ENTER) {
 	            

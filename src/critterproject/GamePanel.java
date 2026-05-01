@@ -53,6 +53,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public int gameState;
 	public final int titleState = 0;
 	public final int playState = 1;
+	public final int gameOverState = 2;
 	
 	
 	
@@ -74,6 +75,13 @@ public class GamePanel extends JPanel implements Runnable{
 	    // playMusic(0); 
 	    
 	    gameState = titleState; // Sets the game to the Title Screen first
+	}
+	
+	public void resetGame() {
+	    currentHappiness = 100; // Or whatever your max is
+	    player.worldX = tileSize * 25; // Reset position
+	    player.worldY = tileSize * 25;
+	    aSetter.setObject(); // Re-spawn items
 	}
 	
 	
@@ -124,10 +132,11 @@ public class GamePanel extends JPanel implements Runnable{
 		if (gameState == playState) {
 	        player.update();
 
-	        // One-minute teleportation logic
+	        //one min teleportation logic
 	        spiderTimer++;
-	        if (spiderTimer >= 3600) { 
-	            aSetter.spawnSpider(0); // Relocate the spider in slot 0
+	        if (spiderTimer >= 600) { 
+	            aSetter.spawnSpider(0);
+	            aSetter.spawnCherries(1); 
 	            spiderTimer = 0;
 	        }
 	    }
@@ -149,6 +158,14 @@ public class GamePanel extends JPanel implements Runnable{
 	    // PLAYING
 	    else {
 	        tileM.draw(g2); // Draw tiles first
+	        
+	        for (int i = 0; i < obj.length; i++) {
+	            if (obj[i] != null) {
+	                obj[i].draw(g2, this); 
+	            }
+	        } //objects
+	        
+	        
 	        player.draw(g2); // Draw player second
 	        ui.draw(g2);    // Draw UI last (so it's on top!)
 	    }

@@ -65,6 +65,41 @@ public class Player extends Entity {
 		}
 	}
 	
+	
+	public void pickUpItem(int i) {
+	    if (i != 999) { // 999 means no object was hit
+	        String itemName = gp.obj[i].name;
+
+	        if (itemName.equals("Cherries")) {
+	            // POSITIVE EFFECT
+	            gp.currentHappiness += 20; 
+	            if(gp.currentHappiness > gp.maxHappiness) gp.currentHappiness = gp.maxHappiness;
+	            
+	            gp.ui.showMessage("Sweet cherries! +Happiness", Color.green);
+	            gp.obj[i] = null; // Remove the item from the map
+	        }
+
+	        if (itemName.equals("Spider")) {
+	            // NEGATIVE EFFECT
+	            gp.currentHappiness -= 20;
+	            if(gp.currentHappiness < 0) gp.currentHappiness = 0;
+	            
+	            gp.ui.showMessage("Yuck! A spider! -Happiness", Color.red);
+	            gp.obj[i] = null;
+	            
+	            
+	            if (gp.currentHappiness <= 0) {
+	                gp.currentHappiness = 0;
+	                gp.gameState = gp.gameOverState; // TRIGGER GAME OVER
+	            }
+	            
+	        } 
+	        
+	        
+	        
+	    }
+	}
+	
 	public void update() {
 		
 		if(keyH.upPressed == true || keyH.downPressed == true || keyH.rightPressed == true || keyH.leftPressed == true) {
@@ -85,6 +120,9 @@ public class Player extends Entity {
 			//check tile collision
 			collisionOn = false;
 			gp.cChecker.checkTile(this);
+			
+			int objIndex = gp.cChecker.checkObject(this, true); // 1. Check for hits
+			pickUpItem(objIndex);  
 			
 			//if collision is false, player can move 
 			if(collisionOn == false) {
@@ -116,17 +154,13 @@ public class Player extends Entity {
 				
 				spriteCounter = 0;
 			}
-		}	
+		}
+		                           
 	}
 	
 	public void draw(Graphics2D g2) {
-		//g2.setColor(Color.white);; //we draw tiles THEN player - don't want to hide character
-
-		//g2.fillRect(x, y, gp.tileSize, gp.tileSize);
 		
 		BufferedImage image = null;
-		
-		//System.out.println("DEBUG: direction is [" + direction + "] and spriteNum is " + spriteNum);
 		
 		switch(direction) {
         case "up":

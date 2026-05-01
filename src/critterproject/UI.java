@@ -17,6 +17,7 @@ public class UI {
     public String message = "";
     public boolean messageOn = false;
     public int messageCounter = 0;
+    public Color messageColor = Color.white; // Default color
     
     
     //command integer (title screen menu selection for later?)
@@ -42,9 +43,11 @@ public class UI {
     
     
 
-    public void showMessage(String text) {
+    public void showMessage(String text, Color color) {
         message = text;
         messageOn = true;
+        messageCounter = 0; // IMPORTANT: Reset this so the message starts fresh
+        messageColor = color;
     }
 
     public void draw(Graphics2D g2) {
@@ -61,6 +64,11 @@ public class UI {
         if (gp.gameState == gp.playState) {
             drawPlayerUI();
         }
+        
+        //game over state
+        if (gp.gameState == gp.gameOverState) {
+            drawGameOverScreen();
+    }
     }
 
     public void drawTitleScreen() {
@@ -96,6 +104,9 @@ public class UI {
         
        
     }
+    
+    
+   
 
     public void drawPlayerUI() {
         //display critter name in the top left
@@ -128,18 +139,47 @@ public class UI {
         double hpScale = (double)150 / gp.maxHappiness; 
         double barWidth = hpScale * gp.currentHappiness;
         g2.fillRect(18, 46, (int)barWidth, 10);
-
-        /* POP-UP MESSAGES (For Signposts/Feeding)
+        
         if (messageOn) {
-            g2.setFont(g2.getFont().deriveFont(30F));
-            g2.drawString(message, gp.tileSize / 2, gp.tileSize * 5);
+            // Use a font size that is visible (e.g., 20F or 30F)
+        	g2.setFont(pixelFont.deriveFont(Font.PLAIN, 14F)); 
+            
+            // Set the color to the one passed in showMessage
+            g2.setColor(messageColor);
+            
+            
+            // Position it near the center or top of the screen
+            g2.drawString(message, gp.tileSize * 2, gp.tileSize * 5);
 
             messageCounter++;
-            if (messageCounter > 120) { // Message lasts 2 seconds (60fps * 2)
+            
+            // If the message has been on screen for 2 seconds (120 frames), hide it
+            if (messageCounter > 120) {
                 messageCounter = 0;
                 messageOn = false;
             } 
-        }*/
+        }
+    }
+    
+    public void drawGameOverScreen() {
+        // 1. DIM THE BACKGROUND
+        g2.setColor(new Color(0, 0, 0, 150)); // Semi-transparent black
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+        // 2. GAME OVER TEXT
+        g2.setFont(pixelFont.deriveFont(Font.BOLD, 60F));
+        g2.setColor(Color.white);
+        String text = "GAME OVER";
+        int x = getXforCenteredText(text);
+        int y = gp.tileSize * 4;
+        g2.drawString(text, x, y);
+
+        // 3. BACK TO TITLE OPTION
+        g2.setFont(pixelFont.deriveFont(Font.PLAIN, 20F));
+        text = "PRESS 'ENTER' FOR TITLE SCREEN";
+        x = getXforCenteredText(text);
+        y += gp.tileSize * 4;
+        g2.drawString(text, x, y);
     }
 
     //helper method to center text based on screen width
