@@ -19,7 +19,7 @@ public class TileManager {
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
 		
-		tile = new Tile[10];
+		tile = new Tile[20];
 		mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 		
 		
@@ -41,7 +41,8 @@ public class TileManager {
 			
 			
 			tile[2] = new Tile();
-			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/sand_tile.png"));
+			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall.png"));
+			tile[2].collision = true;
 			
 			tile[3] = new Tile();
 			tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/fun_grass_tile.png"));
@@ -64,9 +65,16 @@ public class TileManager {
 			tile[8].image = ImageIO.read(getClass().getResourceAsStream("/tiles/cattail_tile.png"));
 			tile[8].collision = true;
 			
+			tile[9] = new Tile();
+			tile[9].image = ImageIO.read(getClass().getResourceAsStream("/tiles/earth.png"));
 			
-			//tile[10] = new Tile();
-			//tile[10].image = ImageIO.read(getClass().getResourceAsStream("/tiles/.png"));
+			tile[10] = new Tile();
+			tile[10].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tree_tile.png"));
+			tile[10].collision = true;
+			
+			tile[11] = new Tile();
+			tile[11].image = ImageIO.read(getClass().getResourceAsStream("/tiles/sand_tile.png"));
+		
 			
 		}catch(IOException e) {
 			e.printStackTrace();

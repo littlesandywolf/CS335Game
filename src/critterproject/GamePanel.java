@@ -28,6 +28,13 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int worldWidth = tileSize * maxWorldCol;
 	public final int worldHeight = tileSize * maxWorldRow;
 	
+	public int maxHappiness = 100;
+	public int currentHappiness = 50; //starting at half health
+	
+	public SuperObject obj[] = new SuperObject[10]; // Array to hold your items
+	
+	public AssetSetter aSetter = new AssetSetter(this);
+	int spiderTimer = 0;
 	
 	int FPS = 60; 
 	
@@ -59,7 +66,15 @@ public class GamePanel extends JPanel implements Runnable{
 		this.gameState = titleState; // <--- MAKE SURE THIS IS 0
 	}
 
-	
+	public void setupGame() {
+	    
+	    aSetter.setObject(); // This tells the AssetSetter to place your items
+	    
+	    // If you have music, you would start it here
+	    // playMusic(0); 
+	    
+	    gameState = titleState; // Sets the game to the Title Screen first
+	}
 	
 	
 	public void startGameThread() {
@@ -106,7 +121,16 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		
 	public void update() {
-		player.update();
+		if (gameState == playState) {
+	        player.update();
+
+	        // One-minute teleportation logic
+	        spiderTimer++;
+	        if (spiderTimer >= 3600) { 
+	            aSetter.spawnSpider(0); // Relocate the spider in slot 0
+	            spiderTimer = 0;
+	        }
+	    }
 		
 	}
 	

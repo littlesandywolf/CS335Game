@@ -100,22 +100,34 @@ public class UI {
     public void drawPlayerUI() {
         //display critter name in the top left
     	g2.setFont(pixelFont.deriveFont(Font.PLAIN, 10F));
-    	
     	String displayName = "Critter: " + gp.player.name;
-        
     	//measuring actual text to hug the background of text box
     	int textWidth = g2.getFontMetrics().stringWidth(displayName);
-        int boxHeight = 24;
-        int boxWidth = textWidth + 15; // Small padding
-
-        //box around text
-        g2.setColor(new Color(0, 0, 0, 100)); 
-        g2.fillRoundRect(10, 10, boxWidth, boxHeight, 10, 10); // Rounded corners look better!
-
-        //text inside box
+        
+    	int boxWidth = textWidth + 100; // Wider to fit the bar
+        int boxHeight = 55; 
+        g2.setColor(new Color(0, 0, 0, 120)); 
+        g2.fillRoundRect(10, 10, boxWidth, boxHeight, 10, 10);
+    	
+        //draw name
         g2.setColor(Color.white);
         g2.drawString(displayName, 18, 27);
         
+        //happiness stat
+        String label = "HAPPINESS";
+        g2.setFont(pixelFont.deriveFont(Font.PLAIN, 8F));
+        g2.drawString(label, 18, 42);
+        
+     // Bar Background (Empty/Shadow)
+        g2.setColor(Color.gray);
+        g2.fillRect(18, 46, 150, 10);
+        
+     // Happiness Fill (Calculation based on Player stats)
+        // Adjust these variables based on where you store Happiness (gp.player is typical)
+        g2.setColor(new Color(255, 100, 100)); // Coral Pink
+        double hpScale = (double)150 / gp.maxHappiness; 
+        double barWidth = hpScale * gp.currentHappiness;
+        g2.fillRect(18, 46, (int)barWidth, 10);
 
         /* POP-UP MESSAGES (For Signposts/Feeding)
         if (messageOn) {
