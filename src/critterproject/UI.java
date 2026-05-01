@@ -176,7 +176,7 @@ public class UI {
 
         // 3. BACK TO TITLE OPTION
         g2.setFont(pixelFont.deriveFont(Font.PLAIN, 20F));
-        text = "PRESS 'ENTER' FOR TITLE SCREEN";
+        text = "Press 'SPACE' to return to the menu";
         x = getXforCenteredText(text);
         y += gp.tileSize * 4;
         g2.drawString(text, x, y);
