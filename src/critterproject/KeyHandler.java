@@ -12,7 +12,7 @@ public class KeyHandler implements KeyListener{
 	public KeyHandler(GamePanel gp) {
         this.gp = gp;
     }
-
+	public boolean runPressed, jumpPressed;
 	public boolean upPressed, downPressed, leftPressed, rightPressed;
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -62,6 +62,14 @@ public class KeyHandler implements KeyListener{
 			if(code == KeyEvent.VK_D) {
 				rightPressed = true;
 			}
+			if(code == KeyEvent.VK_SHIFT) {
+			    runPressed = true;
+			}
+
+			if(code == KeyEvent.VK_SPACE) {
+			    jumpPressed = true;
+			}
+			
 	    }
 		
 	}
@@ -70,7 +78,13 @@ public class KeyHandler implements KeyListener{
 	public void keyReleased(KeyEvent e) {
 		
 		int code = e.getKeyCode();
-		
+		if(code == KeyEvent.VK_SHIFT) {
+		    runPressed = false;
+		}
+
+		if(code == KeyEvent.VK_SPACE) {
+		    jumpPressed = false;
+		}
 		if(code == KeyEvent.VK_W) {
 			upPressed = false;
 		}
