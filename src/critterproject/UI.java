@@ -65,13 +65,23 @@ public class UI {
             drawPlayerUI();
         }
         if(gp.gameState == gp.gameOverState) {
+        	if (gp.currentHappiness==0) {
+        	g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
+            g2.drawString("YOU LOSE!", 250, 300);
 
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 30F));
+            g2.drawString("Happiness EMPTY:(", 250, 360);
+        		
+        	}
+        	else {
+        		
+        	
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
             g2.drawString("YOU WIN!", 250, 300);
 
             g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 30F));
-            g2.drawString("Happiness Full!", 220, 360);
-        }
+            g2.drawString("Happiness Full!", 250, 360);
+        }}
         
  
     }
@@ -194,3 +204,4 @@ public class UI {
         return x;
     }
 }
+
