@@ -31,7 +31,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public int maxHappiness = 100;
 	public int currentHappiness = 50; //starting at half health
 	
-	public SuperObject obj[] = new SuperObject[10]; // Array to hold your items
+	public SuperObject obj[] = new SuperObject[50]; // Array to hold your items
 	
 	public AssetSetter aSetter = new AssetSetter(this);
 	int spiderTimer = 0;
@@ -137,6 +137,7 @@ public class GamePanel extends JPanel implements Runnable{
 	        if (spiderTimer >= 600) { 
 	            aSetter.spawnSpider(0);
 	            aSetter.spawnCherries(1); 
+	            aSetter.spawnObstacle(2);
 	            spiderTimer = 0;
 	        }
 	    }
