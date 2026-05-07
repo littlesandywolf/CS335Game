@@ -112,7 +112,7 @@ public class Player extends Entity {
 
 	    // RUN
 	    if (keyH.runPressed) {
-	        speed = 7;
+	        speed = 12;
 	    } else {
 	        speed = 4;
 	    }
