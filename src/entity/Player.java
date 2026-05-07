@@ -14,9 +14,13 @@ import critterproject.KeyHandler;
 public class Player extends Entity {
 	GamePanel gp;
 	KeyHandler keyH;
-	
+	public boolean isJumping = false;
+	public int jumpCounter = 0;
 	public String name = "Critter";
-	
+	public int jumpHeight = 0;
+	public int jumpSpeed = 4;
+	public int maxJumpHeight = 40;
+	public boolean falling = false;
 	public final int screenX; //screen position is final; doesnt change
 	public final int screenY;
 	
@@ -77,6 +81,9 @@ public class Player extends Entity {
 	            
 	            gp.ui.showMessage("Sweet cherries! +Happiness", Color.green);
 	            gp.obj[i] = null; // Remove the item from the map
+	            if(gp.currentHappiness>= 100) {
+	                gp.gameState = gp.gameOverState;
+	            }
 	        }
 
 	        if (itemName.equals("Spider")) {
@@ -98,64 +105,130 @@ public class Player extends Entity {
 	        
 	        
 	    }
+	    
 	}
 	
 	public void update() {
-		
-		if(keyH.upPressed == true || keyH.downPressed == true || keyH.rightPressed == true || keyH.leftPressed == true) {
-			if(keyH.upPressed == true) {
-				direction = "up";
-				
-			} else if(keyH.downPressed == true) {
-				direction = "down";
-				
-			} else if(keyH.leftPressed == true) {
-				direction = "left";
-				
-			} else if(keyH.rightPressed == true) {
-				direction = "right";
-				
-			}
-			
-			//check tile collision
-			collisionOn = false;
-			gp.cChecker.checkTile(this);
-			
-			int objIndex = gp.cChecker.checkObject(this, true); // 1. Check for hits
-			pickUpItem(objIndex);  
-			
-			//if collision is false, player can move 
-			if(collisionOn == false) {
-				switch(direction) {
-				case "up":
-					worldY -= speed;
-					break;
-				case "down":
-					worldY += speed;
-					break;
-				case "left":
-					worldX -= speed;
-					break;
-				case "right":
-					worldX += speed;
-					break;
-					
-				}
-			}
-			
-			
-			spriteCounter++;
-			if(spriteCounter > 12) {
-				if(spriteNum == 1) {
-					spriteNum = 2;	
-				} else if(spriteNum == 2) {
-					spriteNum = 1;
-				} 
-				
-				spriteCounter = 0;
-			}
-		}
-		                           
+
+	    // RUN
+	    if (keyH.runPressed) {
+	        speed = 7;
+	    } else {
+	        speed = 4;
+	    }
+
+	    // START JUMP
+	    if(keyH.jumpPressed && !isJumping && !falling) {
+	        isJumping = true;
+	    }
+
+	    // JUMP UP
+	    if(isJumping) {
+
+	        worldY -= jumpSpeed;
+	        jumpHeight += jumpSpeed;
+
+	        if(jumpHeight >= maxJumpHeight) {
+	            isJumping = false;
+	            falling = true;
+	        }
+	    }
+
+	    // FALL DOWN
+	    else if(falling) {
+
+	        worldY += jumpSpeed;
+	        jumpHeight -= jumpSpeed;
+
+	        if(jumpHeight <= 0) {
+	            falling = false;
+	            jumpHeight = 0;
+	        }
+	    }
+
+	    // MOVEMENT
+	    if(keyH.upPressed || keyH.downPressed ||
+	       keyH.leftPressed || keyH.rightPressed) {
+
+	        if(keyH.upPressed) {
+	            direction = "up";
+	        }
+	        else if(keyH.downPressed) {
+	            direction = "down";
+	        }
+	        else if(keyH.leftPressed) {
+	            direction = "left";
+	        }
+	        else if(keyH.rightPressed) {
+	            direction = "right";
+	        }
+
+	        // CHECK COLLISION
+	        collisionOn = false;
+
+	        gp.cChecker.checkTile(this);
+
+	        int objIndex = gp.cChecker.checkObject(this, true);
+
+	        // OBSTACLE COLLISION
+	        if(objIndex != 999 &&
+	           gp.obj[objIndex] != null &&
+	           gp.obj[objIndex].name.equals("Obstacle")) {
+
+	            // Ignore obstacle collision while jumping
+	            if(isJumping || falling) {
+
+	                gp.ui.showMessage("Nice Jump!", Color.cyan);
+
+	            } else {
+
+	                collisionOn = true;
+
+	                gp.ui.showMessage("Press SPACE to Jump!", Color.orange);
+	            }
+	        }
+
+	        // PICKUP ITEMS
+	        pickUpItem(objIndex);
+
+	        // MOVE PLAYER
+	        if(collisionOn == false) {
+
+	            switch(direction) {
+
+	            case "up":
+	                worldY -= speed;
+	                break;
+
+	            case "down":
+	                worldY += speed;
+	                break;
+
+	            case "left":
+	                worldX -= speed;
+	                break;
+
+	            case "right":
+	                worldX += speed;
+	                break;
+	            }
+	        }
+
+	        // SPRITE ANIMATION
+	        spriteCounter++;
+
+	        if(spriteCounter > 12) {
+
+	            if(spriteNum == 1) {
+	                spriteNum = 2;
+	            }
+	            else if(spriteNum == 2) {
+	                spriteNum = 1;
+	            }
+
+	            spriteCounter = 0;
+	        }
+	    }
 	}
 	
 	public void draw(Graphics2D g2) {
