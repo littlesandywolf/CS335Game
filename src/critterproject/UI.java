@@ -64,11 +64,16 @@ public class UI {
         if (gp.gameState == gp.playState) {
             drawPlayerUI();
         }
+        if(gp.gameState == gp.gameOverState) {
+
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
+            g2.drawString("YOU WIN!", 250, 300);
+
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 30F));
+            g2.drawString("Happiness Full!", 220, 360);
+        }
         
-        //game over state
-        if (gp.gameState == gp.gameOverState) {
-            drawGameOverScreen();
-    }
+ 
     }
 
     public void drawTitleScreen() {
