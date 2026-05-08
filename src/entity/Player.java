@@ -275,14 +275,28 @@ public class Player extends Entity {
 			trailX = screenX - 15;
 		}
 			
-		g2.setColor(Color.PINK);
-		g2.fillRect(trailX, trailY, 18, 18);
+		g2.setColor(Color.RED);
+		g2.fillRect(trailX, trailY, 26, 26);
 
-		g2.setColor(Color.CYAN);
-		g2.fillRect(trailX + 8, trailY + 8, 18, 18);
+		g2.setColor(Color.ORANGE);
+		g2.fillRect(trailX + 6, trailY + 6, 22, 22);
 
 		g2.setColor(Color.YELLOW);
-		g2.fillRect(trailX - 8, trailY + 16, 18, 18);
+		g2.fillRect(trailX + 12, trailY + 12, 18, 18);
+
+		g2.setColor(Color.GREEN);
+		g2.fillRect(trailX + 18, trailY + 18, 15, 15);
+
+		g2.setColor(Color.CYAN);
+		g2.fillRect(trailX + 24, trailY + 24, 12, 12);
+
+		g2.setColor(Color.BLUE);
+		g2.fillRect(trailX + 30, trailY + 30, 9, 9);
+		
+		
+
+		g2.setColor(new Color(148, 0, 211)); // violet
+		g2.fillRect(trailX + 36, trailY + 36, 6, 6);
 	}
 		
 	g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
