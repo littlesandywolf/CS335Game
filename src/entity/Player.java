@@ -17,6 +17,7 @@ public class Player extends Entity {
 	public boolean isJumping = false;
 	public int jumpCounter = 0;
 	public String name = "Critter";
+	public String color = "Orange";
 	public int jumpHeight = 0;
 	public int jumpSpeed = 4;
 	public int maxJumpHeight = 40;
@@ -54,19 +55,24 @@ public class Player extends Entity {
 		
 		try {
 			
-			up1 = ImageIO.read(getClass().getResourceAsStream("/player/critterup1.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/player/critterup2.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/player/critterdown1.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/player/critterdown2.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/player/critterleft1.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/player/critterleft2.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/player/critterright1.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/player/critterright2.png"));
+			String[] colors = {"Orange", "Gray", "Multicolored", "Rainbow"};
+			int randomIndex = (int)(Math.random()*colors.length);
+			color = colors[randomIndex];
 			
-					
+			up1 = ImageIO.read(getClass().getResourceAsStream("/player/" + color + "/critterup1.png"));
+			up2 = ImageIO.read(getClass().getResourceAsStream("/player/" + color + "/critterup2.png"));
+			down1 = ImageIO.read(getClass().getResourceAsStream("/player/" + color + "/critterdown1.png"));
+			down2 = ImageIO.read(getClass().getResourceAsStream("/player/" + color + "/critterdown2.png"));
+			left1 = ImageIO.read(getClass().getResourceAsStream("/player/" + color + "/critterleft1.png"));
+			left2 = ImageIO.read(getClass().getResourceAsStream("/player/" + color + "/critterleft2.png"));
+			right1 = ImageIO.read(getClass().getResourceAsStream("/player/" + color + "/critterright1.png"));
+			right2 = ImageIO.read(getClass().getResourceAsStream("/player/" + color + "/critterright2.png"));
+				
+						
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
+			
 	}
 	
 	
