@@ -257,7 +257,35 @@ public class Player extends Entity {
     }
 
     
-		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+	if(color.equals("Rainbow")) {
+			
+		int trailX = screenX;
+		int trailY = screenY;
+			
+		if(direction.equals("up")) {
+			trailY = screenY + 35;
+		}
+		else if(direction.equals("down")) {
+			trailY = screenY - 15;
+		}
+		else if(direction.equals("left")) {
+			trailX = screenX + 35;
+		}
+		else if(direction.equals("right")) {
+			trailX = screenX - 15;
+		}
+			
+		g2.setColor(Color.PINK);
+		g2.fillRect(trailX, trailY, 18, 18);
+
+		g2.setColor(Color.CYAN);
+		g2.fillRect(trailX + 8, trailY + 8, 18, 18);
+
+		g2.setColor(Color.YELLOW);
+		g2.fillRect(trailX - 8, trailY + 16, 18, 18);
+	}
+		
+	g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
   
 	}
 }
