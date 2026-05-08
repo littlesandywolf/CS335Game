@@ -78,12 +78,35 @@ public class GamePanel extends JPanel implements Runnable{
 	}
 	
 	public void resetGame() {
-	    currentHappiness = 100; // Or whatever your max is
-	    player.worldX = tileSize * 25; // Reset position
-	    player.worldY = tileSize * 25;
-	    aSetter.setObject(); // Re-spawn items
+	    currentHappiness = 50;
+
+	    player.worldX = tileSize * 23;
+	    player.worldY = tileSize * 21;
+	    player.direction = "down";
+
+	    player.collisionOn = false;
+	    
+	    player.isJumping = false;
+	    
+	    player.falling = false;
+	    player.jumpHeight = 0;
+
+	    keyH.upPressed = false;
+	    
+	    keyH.downPressed = false;
+	    
+	    keyH.leftPressed = false;
+	    
+	    keyH.rightPressed = false;
+	    
+	    keyH.runPressed = false;
+	    
+	    keyH.jumpPressed = false;
+
+	    aSetter.setObject();
 	}
-	
+
+
 	
 	public void startGameThread() {
 		
