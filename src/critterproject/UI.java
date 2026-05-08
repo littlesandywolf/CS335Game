@@ -64,24 +64,9 @@ public class UI {
         if (gp.gameState == gp.playState) {
             drawPlayerUI();
         }
-        if(gp.gameState == gp.gameOverState) {
-        	if (gp.currentHappiness==0) {
-        	g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
-            g2.drawString("YOU LOSE!", 250, 300);
-
-            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 30F));
-            g2.drawString("Happiness EMPTY:(", 250, 360);
-        		
-        	}
-        	else {
-        		
-        	
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
-            g2.drawString("YOU WIN!", 250, 300);
-
-            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 30F));
-            g2.drawString("Happiness Full!", 250, 360);
-        }}
+        if (gp.gameState == gp.gameOverState) {
+        	drawGameOverScreen();
+        }
         
  
     }
@@ -177,25 +162,57 @@ public class UI {
     }
     
     public void drawGameOverScreen() {
-        // 1. DIM THE BACKGROUND
-        g2.setColor(new Color(0, 0, 0, 150)); // Semi-transparent black
-        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+    	    
+	    if(gp.currentHappiness == 0) {
+	        g2.setColor(new Color(80, 20, 20));
+	    }
+	    else {
+	        g2.setColor(new Color(40, 70, 50));
+	    }
 
-        // 2. GAME OVER TEXT
-        g2.setFont(pixelFont.deriveFont(Font.BOLD, 60F));
-        g2.setColor(Color.white);
-        String text = "GAME OVER";
-        int x = getXforCenteredText(text);
-        int y = gp.tileSize * 4;
-        g2.drawString(text, x, y);
+	    g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 
-        // 3. BACK TO TITLE OPTION
-        g2.setFont(pixelFont.deriveFont(Font.PLAIN, 20F));
-        text = "Press 'SPACE' to return to the menu";
-        x = getXforCenteredText(text);
-        y += gp.tileSize * 4;
-        g2.drawString(text, x, y);
-    }
+	    g2.setFont(pixelFont.deriveFont(Font.BOLD, 50F));
+	    
+	    
+	    g2.setColor(Color.white);
+
+	    String text;
+
+	    if(gp.currentHappiness == 0) {
+	        text = "YOU LOSE!";
+	    }
+	    else {
+	        text = "YOU WIN!";
+	    }
+
+	    int x = getXforCenteredText(text);
+	    
+	    int y = gp.tileSize * 4;
+	    g2.drawString(text, x, y);
+
+	    g2.setFont(pixelFont.deriveFont(Font.PLAIN, 18F));
+
+	    if(gp.currentHappiness == 0) {
+	        text = "Your happiness is empty, womp womp!";
+	    }
+	    else {
+	        text = "Your happiness is full, yippee!";
+	    }
+
+	    x = getXforCenteredText(text);
+	    y += gp.tileSize;
+	    g2.drawString(text, x, y);
+
+	    g2.setFont(pixelFont.deriveFont(Font.PLAIN, 14F));
+	    
+	    text = "Press SPACE to return to title screen";
+	    
+	    x = getXforCenteredText(text);
+	    y += gp.tileSize * 2;
+	    
+	    g2.drawString(text, x, y);
+	}
 
     //helper method to center text based on screen width
     public int getXforCenteredText(String text) {
